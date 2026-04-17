@@ -7,4 +7,5 @@
 * cargo install trunk
 
 # Build and running
-* trunk serve --port 8081
+* trunk serve --port 8080
+* killall -9 trunk
