@@ -1,4 +1,4 @@
 # Rust
 Cargo.lock
 target
-pkg
+dist

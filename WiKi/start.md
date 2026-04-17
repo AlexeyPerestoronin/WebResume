@@ -4,10 +4,7 @@
 * curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 * rustup target add wasm32-unknown-unknown
 * cargo install wasm-pack
-* cargo install http-server
+* cargo install trunk
 
-# Build project
-* wasm-pack build --target web --out-dir ./pkg
-
-# Local Running
-* python3 -m http.server 8080
+# Build and running
+* trunk serve --port 8081
