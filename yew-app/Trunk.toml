@@ -1,2 +1,12 @@
 [build]
-public_url = "https://github.com/AlexeyPerestoronin/WebResume/" 
+target = "index.html"
+public_url = "/WebResume/"
+
+[serve]
+port = 8085
+
+[[hooks]]
+stage = "post_build"
+command = "sh"
+command_arguments = ["-c", "cp dist/.stage/index.html dist/.stage/404.html"]
+

@@ -22,14 +22,12 @@ jobs:
       - name: Install Trunk
         run: cargo install trunk
 
-      - name: Move to trunk project dir
-        run: cd ./yew-app
-
       - name: Build Release
+        working-directory: yew-app
         run: trunk build --release
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist # Trunk building ready files into 'dist'-folder
-          branch: gh-pages # the branch for deploying of the site
+          folder: yew-app/dist
+          branch: gh-pages
