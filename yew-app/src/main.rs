@@ -1,10 +1,14 @@
-use yew::prelude::*;
 use stylist::yew::styled_component; // Используем специальный макрос
 use web_sys::HtmlInputElement;
+use yew::prelude::*;
+
+use crate::html_elements::HtmlElement;
+
+mod html_elements;
 
 #[styled_component(App)] // Заменяем function_component на styled_component
 pub fn app() -> Html {
-    let input_value = use_state(|| String::new());
+    let input_value: UseStateHandle<String> = use_state(|| String::new());
     let messages = use_state(|| Vec::<String>::new());
 
     // Описываем стили прямо в переменной
@@ -57,6 +61,13 @@ pub fn app() -> Html {
             }
         })
     };
+
+    // let user_input: UseStateHandle<String> = use_state(|| String::new());
+    let _h: Html = html_elements::Div::new()
+        .add_style(stylesheet.clone())
+        .add_component(Box::new(html_elements::H1::new().add_text("Yew Form with Inline Styles".to_string())))
+        // .add_component(Box::new(html_elements::Input::new(&user_input)))
+        .get_html();
 
     html! {
         // Оборачиваем всё в div с нашими стилями
