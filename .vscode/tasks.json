@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "problemMatcher": [],
+    "tasks": [
+        {
+            "label": "Trunk: build",
+            "type": "shell",
+            "command": "trunk",
+            "options": {
+                "cwd": "${workspaceFolder}/yew-app"
+            },
+            "args": [
+                "build"
+            ]
+        },
+        {
+            "label": "Trunk: serve",
+            "type": "shell",
+            "command": "trunk",
+            "options": {
+                "cwd": "${workspaceFolder}/yew-app"
+            },
+            "args": [
+                "serve",
+                "--port",
+                "8080"
+            ],
+        },
+        {
+            "label": "Trunk: kill",
+            "type": "shell",
+            "command": "killall",
+            "options": {
+                "cwd": "${workspaceFolder}/yew-app"
+            },
+            "args": [
+                "-9",
+                "trunk",
+            ],
+        }
+    ]
+}

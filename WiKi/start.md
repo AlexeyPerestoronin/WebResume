@@ -8,4 +8,3 @@
 
 # Build and running
 * trunk serve --port 8080
-* killall -9 trunk
