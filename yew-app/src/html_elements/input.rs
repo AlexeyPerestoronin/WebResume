@@ -19,7 +19,7 @@ impl Input {
         }
     }
 
-    pub fn add_placeholder(mut self, placeholder: String) -> Self {
+    pub fn set_placeholder(mut self, placeholder: String) -> Self {
         self.placeholder = placeholder;
         self
     }

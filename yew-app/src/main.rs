@@ -64,16 +64,9 @@ pub fn app() -> Html {
         })
     };
 
-    let user_input: Rc<UseStateHandle<String>> = Rc::new(use_state(|| String::new()));
-    let _h: Html = html_elements::Div::new()
-        .add_style(stylesheet.clone())
-        .add_component(Rc::new(html_elements::H1::new().add_text("Yew Form with Inline Styles".to_string())))
-        .add_component(Rc::new(html_elements::Input::new(user_input.clone()).add_placeholder("Введите текст...".to_string())))
-        .get_html();
-
-    html! {
+    let _ = html! {
         // Оборачиваем всё в div с нашими стилями
-        <div class={stylesheet}>
+        <div class={stylesheet.clone()}>
             <div style="padding: 20px; font-family: sans-serif;">
                 <h1>{ "Yew Form with Inline Styles" }</h1>
 
@@ -92,7 +85,25 @@ pub fn app() -> Html {
                 </ul>
             </div>
         </div>
-    }
+    };
+
+    let user_input: Rc<UseStateHandle<String>> = Rc::new(use_state(|| String::new()));
+    let user_click_event = Rc::new(Callback::from(|_| {}));
+    html_elements::Div::new()
+        .add_style(stylesheet)
+        .add_component(Rc::new(
+            html_elements::H1::new().set_text("Yew Form with Inline Styles".to_string()),
+        ))
+        .add_component(Rc::new(
+            html_elements::Input::new(user_input.clone())
+                .set_placeholder("Введите текст...".to_string()),
+        ))
+        .add_component(Rc::new(
+            html_elements::Button::new()
+                .set_placeholder("Добавить".to_string())
+                .set_on_click_event(user_click_event.clone()),
+        ))
+        .get_html()
 }
 
 fn main() {

@@ -13,7 +13,7 @@ impl H1 {
         }
     }
 
-    pub fn add_text(mut self, text: String) -> Self {
+    pub fn set_text(mut self, text: String) -> Self {
         self.text = text;
         self
     }
