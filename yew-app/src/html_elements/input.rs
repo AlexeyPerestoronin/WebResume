@@ -1,15 +1,18 @@
+use std::rc::Rc;
+
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 use crate::html_elements::HtmlElement;
 
-pub struct Input<'a> {
+
+pub struct Input {
     placeholder: String,
-    input_value: &'a UseStateHandle<String>,
+    input_value: Rc<UseStateHandle<String>>,
 }
 
-impl<'a> Input<'a> {
-    pub fn new(input_value: &'a UseStateHandle<String>) -> Self {
+impl Input {
+    pub fn new(input_value: Rc<UseStateHandle<String>>) -> Self {
         Self {
             placeholder: String::new(),
             input_value: input_value,
@@ -22,7 +25,7 @@ impl<'a> Input<'a> {
     }
 }
 
-impl<'a> HtmlElement for Input<'a> {
+impl HtmlElement for Input {
     fn get_html(&self) -> Html {
         let on_input = {
             let input_value = self.input_value.clone();

@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 use stylist::yew::styled_component; // Используем специальный макрос
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
@@ -62,11 +64,11 @@ pub fn app() -> Html {
         })
     };
 
-    // let user_input: UseStateHandle<String> = use_state(|| String::new());
+    let user_input: Rc<UseStateHandle<String>> = Rc::new(use_state(|| String::new()));
     let _h: Html = html_elements::Div::new()
         .add_style(stylesheet.clone())
-        .add_component(Box::new(html_elements::H1::new().add_text("Yew Form with Inline Styles".to_string())))
-        // .add_component(Box::new(html_elements::Input::new(&user_input)))
+        .add_component(Rc::new(html_elements::H1::new().add_text("Yew Form with Inline Styles".to_string())))
+        .add_component(Rc::new(html_elements::Input::new(user_input.clone()).add_placeholder("Введите текст...".to_string())))
         .get_html();
 
     html! {

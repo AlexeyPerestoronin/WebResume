@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 use stylist::StyleSource;
 use yew::prelude::*;
 
@@ -5,7 +7,7 @@ use crate::html_elements::HtmlElement;
 
 pub struct Div {
     style_opt: Option<StyleSource>,
-    components: Vec<Box<dyn HtmlElement>>,
+    components: Vec<Rc<dyn HtmlElement>>,
 }
 
 impl Div {
@@ -21,7 +23,7 @@ impl Div {
         self
     }
 
-    pub fn add_component(mut self, component: Box<dyn HtmlElement>) -> Self {
+    pub fn add_component(mut self, component: Rc<dyn HtmlElement>) -> Self {
         self.components.push(component);
         self
     }
