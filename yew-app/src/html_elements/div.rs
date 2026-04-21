@@ -6,20 +6,20 @@ use yew::prelude::*;
 use crate::html_elements::HtmlElement;
 
 pub struct Div {
-    style_opt: Option<StyleSource>,
+    style: Option<StyleSource>,
     components: Vec<Rc<RefCell<dyn HtmlElement>>>,
 }
 
 impl Div {
     pub fn new() -> Self {
         Self {
-            style_opt: None,
+            style: None,
             components: Vec::new(),
         }
     }
 
     pub fn add_styles(mut self, style: StyleSource) -> Self {
-        self.style_opt.replace(style);
+        self.style.replace(style);
         self
     }
 
@@ -31,17 +31,10 @@ impl Div {
 
 impl HtmlElement for Div {
     fn get_html(&self) -> Html {
-        match &self.style_opt {
-            Some(stylesheet) => html! {
-                <div class={stylesheet.clone()}>
-                    { for self.components.iter().map(|c| c.borrow().get_html()) }
-                </div>
-            },
-            None => html! {
-                <div>
-                    { for self.components.iter().map(|c| c.borrow().get_html()) }
-                </div>
-            },
+        html! {
+            <div class={self.style.clone()}>
+                { for self.components.iter().map(|c| c.borrow().get_html()) }
+            </div>
         }
     }
 }

@@ -6,7 +6,7 @@ use crate::html_elements::HtmlElement;
 
 pub struct Button {
     placeholder: String,
-    on_click_event: Option<Rc<Callback<MouseEvent>>>,
+    on_click_event: Option<Callback<MouseEvent>>,
 }
 
 impl Button {
@@ -22,19 +22,14 @@ impl Button {
         self
     }
 
-    pub fn set_on_click_event(mut self, on_click_event: Rc<Callback<MouseEvent>>) -> Self {
-        self.on_click_event = Some(on_click_event);
+    pub fn set_on_click_event(mut self, on_click_event: Option<Callback<MouseEvent>>) -> Self {
+        self.on_click_event = on_click_event;
         self
     }
 }
 
 impl HtmlElement for Button {
     fn get_html(&self) -> Html {
-        match &self.on_click_event {
-            Some(call_back) => {
-                html! { <button onclick={ call_back.as_ref() }> { self.placeholder.clone() } </button> }
-            }
-            None => html! { <button> { self.placeholder.clone() } </button> },
-        }
+        html! { <button onclick={ self.on_click_event.clone() }> { self.placeholder.clone() } </button> }
     }
 }
