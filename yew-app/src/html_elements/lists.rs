@@ -1,5 +1,4 @@
 use std::{collections::LinkedList, rc::Rc};
-
 use yew::prelude::*;
 
 use crate::html_elements::HtmlElement;

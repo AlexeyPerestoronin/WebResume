@@ -1,5 +1,4 @@
 use std::{cell::RefCell, rc::Rc};
-
 use stylist::StyleSource;
 use yew::prelude::*;
 
@@ -18,8 +17,8 @@ impl Div {
         }
     }
 
-    pub fn add_styles(mut self, style: StyleSource) -> Self {
-        self.style.replace(style);
+    pub fn set_css_stylesheet(mut self, style: Option<StyleSource>) -> Self {
+        self.style = style;
         self
     }
 

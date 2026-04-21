@@ -1,5 +1,4 @@
 use std::rc::Rc;
-
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
