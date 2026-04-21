@@ -96,12 +96,15 @@ pub fn app() -> Html {
         ))
         .add_component(Rc::new(
             html_elements::Input::new(user_input.clone())
-                .set_placeholder("Введите текст...".to_string()),
+            .set_placeholder("Введите текст...".to_string()),
         ))
         .add_component(Rc::new(
             html_elements::Button::new()
-                .set_placeholder("Добавить".to_string())
-                .set_on_click_event(user_click_event.clone()),
+            .set_placeholder("Добавить".to_string())
+            .set_on_click_event(user_click_event.clone()),
+        ))
+        .add_component(Rc::new(
+            html_elements::H3::new().set_text("Список записей:".to_string()),
         ))
         .get_html()
 }

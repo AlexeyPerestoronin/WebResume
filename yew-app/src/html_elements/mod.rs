@@ -7,8 +7,8 @@ pub trait HtmlElement{
 pub mod div;
 pub use div::*;
 
-pub mod h1;
-pub use h1::*;
+pub mod headers;
+pub use headers::*;
 
 pub mod input;
 pub use input::*;
