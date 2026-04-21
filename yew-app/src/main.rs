@@ -1,10 +1,10 @@
-use std::rc::Rc;
+use std::{cell::RefCell, collections::LinkedList, rc::Rc};
 
 use stylist::yew::styled_component; // Используем специальный макрос
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
-use crate::html_elements::HtmlElement;
+use crate::html_elements::{HtmlElement, ListItem};
 
 mod html_elements;
 
@@ -54,7 +54,7 @@ pub fn app() -> Html {
     let on_click = {
         let input_value = input_value.clone();
         let messages = messages.clone();
-        Callback::from(move |_| {
+        Callback::from(move |s| {
             if !input_value.is_empty() {
                 let mut current_messages = (*messages).clone();
                 current_messages.push((*input_value).clone());
@@ -63,6 +63,12 @@ pub fn app() -> Html {
             }
         })
     };
+
+    let c = RefCell::new("hello".to_owned());
+
+    *c.borrow_mut() = "bonjour".to_owned();
+
+    assert_eq!(&*c.borrow(), "bonjour");
 
     let _ = html! {
         // Оборачиваем всё в div с нашими стилями
@@ -87,25 +93,40 @@ pub fn app() -> Html {
         </div>
     };
 
-    let user_input: Rc<UseStateHandle<String>> = Rc::new(use_state(|| String::new()));
-    let user_click_event = Rc::new(Callback::from(|_| {}));
+    // TODO: change use_state to RefCell
+    let user_input_history = Rc::new(use_state(|| LinkedList::<ListItem>::new()));
+    let user_input = Rc::new(use_state(|| String::new()));
+    let user_click_event = Rc::new({
+        let user_input = user_input.clone();
+        let user_input_history = user_input_history.clone();
+        Callback::from(move |_mouse_event| {
+            let mut new_history : LinkedList::<ListItem> = user_input_history.iter().cloned().collect();
+            let new_item = html_elements::ListItem::new((*user_input).to_string());
+            new_history.push_back(new_item);
+            user_input_history.set(new_history);
+        })
+    });
+
     html_elements::Div::new()
-        .add_style(stylesheet)
-        .add_component(Rc::new(
-            html_elements::H1::new().set_text("Yew Form with Inline Styles".to_string()),
-        ))
-        .add_component(Rc::new(
+        .add_styles(stylesheet)
+        .add_component(Rc::new(RefCell::new(
+            html_elements::H1::new().set_text("Пример тестирования подхода!".to_string()),
+        )))
+        .add_component(Rc::new(RefCell::new(
             html_elements::Input::new(user_input.clone())
-            .set_placeholder("Введите текст...".to_string()),
-        ))
-        .add_component(Rc::new(
+                .set_placeholder("Введите текст...".to_string()),
+        )))
+        .add_component(Rc::new(RefCell::new(
             html_elements::Button::new()
-            .set_placeholder("Добавить".to_string())
-            .set_on_click_event(user_click_event.clone()),
-        ))
-        .add_component(Rc::new(
+                .set_placeholder("Добавить".to_string())
+                .set_on_click_event(user_click_event.clone()),
+        )))
+        .add_component(Rc::new(RefCell::new(
             html_elements::H3::new().set_text("Список записей:".to_string()),
-        ))
+        )))
+        .add_component(Rc::new(RefCell::new(html_elements::UnorderedList::new(
+            user_input_history.clone(),
+        ))))
         .get_html()
 }
 
