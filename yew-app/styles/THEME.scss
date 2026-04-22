@@ -1,10 +1,9 @@
-// Цвета в стиле Blueprint
+// Blueprint's color scheme
 $pt-dark-gray: #182026;
 $pt-light-gray: #f5f8fa;
 $pt-accent: #106ba3; // Blueprint Blue
 $pt-border: rgba(16, 22, 26, 0.15);
 
-// Базовые стили для элементов
 body {
     font-family: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", sans-serif;
     background-color: $pt-light-gray;
@@ -12,7 +11,6 @@ body {
     margin: 0;
 }
 
-// Стилизация всех кнопок по умолчанию
 button {
     display: inline-flex;
     align-items: center;
@@ -42,7 +40,6 @@ button {
     }
 }
 
-// Стилизация всех полей ввода
 input[type="text"] {
     height: 30px;
     padding: 0 10px;
@@ -58,3 +55,6 @@ input[type="text"] {
                     0 0 0 3px rgba(16, 107, 163, 0.1);
     }
 }
+
+// import specific styles
+@import "./test-box.scss"
