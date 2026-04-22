@@ -1,29 +1,30 @@
-use yew::prelude::*;
+use yew::html::Html;
 
-use crate::html_elements::HtmlElement;
+use crate::html_elements::{Div, GridCell, HtmlElement};
 
-pub struct Grid {
-    text: String,
+pub struct GridLayout(Div);
+
+impl std::ops::Deref for GridLayout {
+    type Target = Div;
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
 }
 
-impl Grid {
+impl GridLayout {
     pub fn new() -> Self {
-        Self {
-            text: String::new(),
-        }
+        GridLayout(Div::new().set_style(Some("w-layout-layout wf-layout-layout".to_string())))
     }
 
-    pub fn set_text(mut self, text: String) -> Self {
-        self.text = text;
+    pub fn add_cell(mut self, cell: GridCell) -> Self
+    {
+        self.0 = self.0.add_component(cell);
         self
     }
 }
 
-impl HtmlElement for Grid {
+impl HtmlElement for GridLayout {
     fn get_html(&self) -> Html {
-        html! {
-            <div class="w-layout-layout wf-layout-layout">
-            </div>
-        }
+        self.0.get_html()
     }
 }

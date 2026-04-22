@@ -2,7 +2,7 @@ use std::{cell::RefCell, collections::LinkedList, rc::Rc};
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
-use crate::html_elements::{Button, Div, H1, HtmlElement, ListItem, TextInput, UnorderedList};
+use crate::html_elements::{Button, Div, GridCell, GridLayout, H1, HtmlElement, ListItem, TextInput, UnorderedList};
 
 pub struct Welcome {
     user_input: Option<String>,
@@ -63,6 +63,15 @@ impl Component for Welcome {
 
         #[cfg_attr(cfg, rustfmt::skip)]
         Div::new()
+            .add_component(
+                GridLayout::new()
+                    .add_cell(GridCell::new())
+                    .add_cell(
+                        GridCell::new()
+                            .add_component(H1::new().set_text("Web Resume".into()))
+                    )
+                    .add_cell(GridCell::new())
+            )
             .add_component(
                 H1::new()
                     .set_text("Стиль через структуру".into()),
