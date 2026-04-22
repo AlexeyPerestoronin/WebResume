@@ -1,8 +1,8 @@
-use std::{cell::RefCell, collections::LinkedList, rc::Rc};
+use std::collections::LinkedList;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
-use crate::html_elements::{Button, Div, GridCell, GridLayout, H1, HtmlElement, ListItem, TextInput, UnorderedList};
+use crate::html_elements::{Button, Div, H1, H3, HtmlElement, ListItem, TextInput, UnorderedList};
 
 pub struct Welcome {
     user_input: Option<String>,
@@ -64,13 +64,30 @@ impl Component for Welcome {
         #[cfg_attr(cfg, rustfmt::skip)]
         Div::new()
             .add_component(
-                GridLayout::new()
-                    .add_cell(GridCell::new())
-                    .add_cell(
-                        GridCell::new()
-                            .add_component(H1::new().set_text("Web Resume".into()))
+                Div::new()
+                    .set_style(Some("w-layout-layout wf-layout-layout".to_string()))
+                    .add_component(
+                        Div::new()
+                            .set_style(Some("w-layout-cell".to_string()))
+                            .add_component(
+                                H3::new().set_text("test text ...".into())
+                            )
                     )
-                    .add_cell(GridCell::new())
+                    .add_component(
+                        Div::new()
+                            .set_style(Some("w-layout-cell".to_string()))
+                            .add_component(
+                                Div::new()
+                                    .set_style(Some("w-layout-blockcontainer w-container".to_string()))
+                                    .add_component(
+                                        H1::new().set_text("Web Resume".into())
+                                    )
+                            )
+                    )
+                    .add_component(
+                        Div::new()
+                            .set_style(Some("w-layout-cell".to_string()))
+                    )
             )
             .add_component(
                 H1::new()
