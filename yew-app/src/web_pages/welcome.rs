@@ -1,5 +1,5 @@
 use std::{cell::RefCell, collections::LinkedList, rc::Rc};
-use web_sys::{History, HtmlInputElement};
+use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 use crate::html_elements::{Button, Div, H1, HtmlElement, ListItem, TextInput, UnorderedList};
@@ -20,8 +20,8 @@ impl Component for Welcome {
 
     fn create(_ctx: &Context<Self>) -> Self {
         Self {
-            user_input: Option::None,
-            history: Option::None,
+            user_input: None,
+            history: None,
         }
     }
 
@@ -30,19 +30,17 @@ impl Component for Welcome {
             Msg::UpdateInput(new_user_input) => {
                 if new_user_input.is_empty() == false {
                     self.user_input = Some(new_user_input);
-                    return true;
+                } else {
+                    self.user_input = None;
                 }
-                false
+                true
             }
             Msg::AddToList => {
                 if let Some(input) = self.user_input.take() {
-                    if input.is_empty() == false {
-                        let history = self.history.get_or_insert_with(|| LinkedList::new());
-                        history.push_back(input);
-                        return true;
-                    }
-                };
-                false
+                    let history = self.history.get_or_insert_with(|| LinkedList::new());
+                    history.push_back(input);
+                }
+                true
             }
         }
     }
@@ -58,32 +56,31 @@ impl Component for Welcome {
         // Создаем callback для кнопки
         let click_event_handler = link.callback(|_: MouseEvent| Msg::AddToList);
 
-        let filler = match &self.history {
+        let list_item_filler = match &self.history {
             Some(user_inputs) => Some(user_inputs.iter().map(|input| ListItem::new(input.clone()))),
             None => Option::None,
         };
 
+        #[cfg_attr(cfg, rustfmt::skip)]
         Div::new()
             .add_component(Rc::new(RefCell::new(
-                H1::new().set_text("Стиль через структуру".into()),
+                H1::new()
+                    .set_text("Стиль через структуру".into()),
             )))
             .add_component(Rc::new(RefCell::new(
                 TextInput::new()
                     .set_value(self.user_input.clone())
-                    .set_placeholder(
-                        self.user_input
-                            .clone()
-                            .or(Some("введите текст...".to_string())),
-                    )
+                    .set_placeholder(self.user_input.clone().or(Some("введите текст...".to_string())))
                     .set_input_event_handler(Some(input_event_handler)),
             )))
             .add_component(Rc::new(RefCell::new(
                 Button::new()
                     .set_placeholder("Добавить".into())
-                    .set_on_click_event_handler(Some(click_event_handler)),
+                    .set_on_click_event_handler(Some(click_event_handler))
             )))
             .add_component(Rc::new(RefCell::new(
-                UnorderedList::new().fill_items(filler),
+                UnorderedList::new()
+                    .fill_items(list_item_filler)
             )))
             .get_html()
     }
