@@ -1,0 +1,60 @@
+// Цвета в стиле Blueprint
+$pt-dark-gray: #182026;
+$pt-light-gray: #f5f8fa;
+$pt-accent: #106ba3; // Blueprint Blue
+$pt-border: rgba(16, 22, 26, 0.15);
+
+// Базовые стили для элементов
+body {
+    font-family: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", sans-serif;
+    background-color: $pt-light-gray;
+    color: $pt-dark-gray;
+    margin: 0;
+}
+
+// Стилизация всех кнопок по умолчанию
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 400;
+    border: none;
+    border-radius: 3px;
+    background-color: #f5f8fa;
+    box-shadow: inset 0 0 0 1px rgba(16, 22, 26, 0.2), 
+                inset 0 -1px 0 rgba(16, 22, 26, 0.1);
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background-color: #ebf1f5;
+        box-shadow: inset 0 0 0 1px rgba(16, 22, 26, 0.2), 
+                    inset 0 -1px 0 rgba(16, 22, 26, 0.1);
+    }
+
+    &:active {
+        background-color: #d8e1e8;
+        box-shadow: inset 0 0 0 1px rgba(16, 22, 26, 0.2), 
+                    inset 0 1px 2px rgba(16, 22, 26, 0.2);
+    }
+}
+
+// Стилизация всех полей ввода
+input[type="text"] {
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 3px;
+    border: none;
+    box-shadow: inset 0 0 0 1px rgba(16, 22, 26, 0.15), 
+                inset 0 1px 1px rgba(16, 22, 26, 0.2);
+    font-size: 14px;
+
+    &:focus {
+        outline: none;
+        box-shadow: inset 0 0 0 1px $pt-accent, 
+                    0 0 0 3px rgba(16, 107, 163, 0.1);
+    }
+}
