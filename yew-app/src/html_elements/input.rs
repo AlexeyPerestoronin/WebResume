@@ -1,43 +1,46 @@
-use std::rc::Rc;
-use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 use crate::html_elements::HtmlElement;
 
-pub struct Input {
-    placeholder: String,
-    input_value: Rc<UseStateHandle<String>>,
+pub struct TextInput {
+    value: Option<String>,
+    placeholder: Option<String>,
+    input_event_handler: Option<Callback<InputEvent>>,
 }
 
-impl Input {
-    pub fn new(input_value: Rc<UseStateHandle<String>>) -> Self {
+impl TextInput {
+    pub fn new() -> Self {
         Self {
-            placeholder: String::new(),
-            input_value: input_value,
+            value: Option::None,
+            placeholder: Option::None,
+            input_event_handler: Option::None,
         }
     }
 
-    pub fn set_placeholder(mut self, placeholder: String) -> Self {
+    pub fn set_value(mut self, value: Option<String>) -> Self {
+        self.value = value;
+        self
+    }
+
+    pub fn set_placeholder(mut self, placeholder: Option<String>) -> Self {
         self.placeholder = placeholder;
+        self
+    }
+
+    pub fn set_input_event_handler(mut self, input_event_handler: Option<Callback<InputEvent>>,
+    ) -> Self {
+        self.input_event_handler = input_event_handler;
         self
     }
 }
 
-impl HtmlElement for Input {
+impl HtmlElement for TextInput {
     fn get_html(&self) -> Html {
-        let on_input = {
-            let input_value = self.input_value.clone();
-            Callback::from(move |e: InputEvent| {
-                let input: HtmlInputElement = e.target_unchecked_into();
-                input_value.set(input.value());
-            })
-        };
-
         html! {
             <input
                 type="text"
-                value={String::from((*self.input_value).as_str())}
-                oninput={on_input}
+                value={self.value.clone()}
+                oninput={self.input_event_handler.clone()}
                 placeholder={self.placeholder.clone()}
             />
         }

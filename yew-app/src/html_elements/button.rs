@@ -27,7 +27,7 @@ impl Button {
         self
     }
 
-    pub fn set_on_click_event(mut self, on_click_event: Option<Callback<MouseEvent>>) -> Self {
+    pub fn set_on_click_event_handler(mut self, on_click_event: Option<Callback<MouseEvent>>) -> Self {
         self.on_click_event = on_click_event;
         self
     }

@@ -1,4 +1,4 @@
-use std::{collections::LinkedList, rc::Rc};
+use std::collections::LinkedList;
 use yew::prelude::*;
 
 use crate::html_elements::HtmlElement;
@@ -25,14 +25,24 @@ impl HtmlElement for ListItem {
 // UnorderedList
 
 pub struct UnorderedList {
-    items: Rc<UseStateHandle<LinkedList<ListItem>>>,
+    items: LinkedList<ListItem>,
 }
 
 impl UnorderedList {
-    pub fn new(items: Rc<UseStateHandle<LinkedList<ListItem>>>) -> Self {
+    pub fn new() -> Self {
         UnorderedList {
-            items: items,
+            items: LinkedList::<ListItem>::new(),
         }
+    }
+
+    pub fn fill_items<I>(mut self, mut filler: Option<I>) -> Self
+    where
+        I: IntoIterator<Item = ListItem>,
+    {
+        if let Some(it) = filler.take() {
+            self.items.extend(it);
+        };
+        self
     }
 }
 
