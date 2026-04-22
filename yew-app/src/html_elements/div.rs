@@ -1,10 +1,9 @@
-use std::{cell::RefCell, rc::Rc};
 use yew::prelude::*;
 
 use crate::html_elements::HtmlElement;
 
 pub struct Div {
-    components: Vec<Rc<RefCell<dyn HtmlElement>>>,
+    components: Vec<Box<dyn HtmlElement>>,
 }
 
 impl Div {
@@ -14,8 +13,11 @@ impl Div {
         }
     }
 
-    pub fn add_component(mut self, component: Rc<RefCell<dyn HtmlElement>>) -> Self {
-        self.components.push(component);
+    pub fn add_component<T>(mut self, component: T) -> Self
+    where
+        T: HtmlElement + 'static,
+    {
+        self.components.push(Box::new(component));
         self
     }
 }
@@ -24,7 +26,7 @@ impl HtmlElement for Div {
     fn get_html(&self) -> Html {
         html! {
             <div>
-                { for self.components.iter().map(|c| c.borrow().get_html()) }
+                { for self.components.iter().map(|c| c.get_html()) }
             </div>
         }
     }

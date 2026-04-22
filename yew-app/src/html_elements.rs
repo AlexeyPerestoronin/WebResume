@@ -1,8 +1,7 @@
-pub use yew::prelude::*;
-
 pub trait HtmlElement {
-    fn get_html(&self) -> Html;
+    fn get_html(&self) -> yew::html::Html;
 }
+
 
 pub mod div;
 pub use div::*;
@@ -18,3 +17,6 @@ pub use button::*;
 
 pub mod lists;
 pub use lists::*;
+
+pub mod layouts;
+pub use layouts::*;

@@ -63,25 +63,26 @@ impl Component for Welcome {
 
         #[cfg_attr(cfg, rustfmt::skip)]
         Div::new()
-            .add_component(Rc::new(RefCell::new(
+            .add_component(
                 H1::new()
                     .set_text("Стиль через структуру".into()),
-            )))
-            .add_component(Rc::new(RefCell::new(
+            )
+            .add_component(
                 TextInput::new()
                     .set_value(self.user_input.clone())
                     .set_placeholder(self.user_input.clone().or(Some("введите текст...".to_string())))
                     .set_input_event_handler(Some(input_event_handler)),
-            )))
-            .add_component(Rc::new(RefCell::new(
+            )
+            .add_component(
                 Button::new()
+                    .set_style(Some("test-button".to_string()))
                     .set_placeholder("Добавить".into())
                     .set_on_click_event_handler(Some(click_event_handler))
-            )))
-            .add_component(Rc::new(RefCell::new(
+            )
+            .add_component(
                 UnorderedList::new()
                     .fill_items(list_item_filler)
-            )))
+            )
             .get_html()
     }
 }
