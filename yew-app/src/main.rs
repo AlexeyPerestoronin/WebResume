@@ -7,35 +7,6 @@ use crate::html_elements::{HtmlElement, ListItem};
 
 #[styled_component(App)] // Заменяем function_component на styled_component
 pub fn app() -> Html {
-    let stylesheet = stylist::css!(
-        r#"
-        .btn-submit {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.1s;
-        }
-
-        .btn-submit:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-submit:active {
-            background-color: #28a745 !important;
-        }
-
-        input {
-            margin-right: 10px;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        "#
-    );
-
     let user_input_history = Rc::new(use_state(|| LinkedList::<ListItem>::new()));
     let user_input = Rc::new(use_state(|| String::new()));
     let user_click_event = {
@@ -51,7 +22,6 @@ pub fn app() -> Html {
     };
 
     html_elements::Div::new()
-        .set_css_stylesheet(Some(stylesheet))
         .add_component(Rc::new(RefCell::new(
             html_elements::H1::new().set_text("Пример тестирования подхода!".to_string()),
         )))
@@ -61,7 +31,7 @@ pub fn app() -> Html {
         )))
         .add_component(Rc::new(RefCell::new(
             html_elements::Button::new()
-                .set_style(Some("btn-submit".to_string()))
+                .set_style(Some("test-button".to_string()))
                 .set_placeholder("Добавить".to_string())
                 .set_on_click_event(Some(user_click_event)),
         )))

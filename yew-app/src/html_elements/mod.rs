@@ -1,6 +1,6 @@
 pub use yew::prelude::*;
 
-pub trait HtmlElement{
+pub trait HtmlElement {
     fn get_html(&self) -> Html;
 }
 

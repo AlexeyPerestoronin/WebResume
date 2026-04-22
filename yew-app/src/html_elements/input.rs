@@ -4,7 +4,6 @@ use yew::prelude::*;
 
 use crate::html_elements::HtmlElement;
 
-
 pub struct Input {
     placeholder: String,
     input_value: Rc<UseStateHandle<String>>,
